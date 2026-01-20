@@ -1,0 +1,21 @@
+{
+  "name": "AubeShop",
+  "short_name": "AubeShop",
+  "description": "Système de Commerce Indépendant par Ange Stéphane SAWADOGO.",
+  "display": "standalone",
+  "start_url": "/",
+  "theme_color": "#111827",
+  "background_color": "#020617",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
