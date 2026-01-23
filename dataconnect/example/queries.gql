@@ -1,0 +1,61 @@
+mutation SeedCourses @transaction @auth(level: NO_ACCESS) {
+  course_insertMany(data: [
+    {
+      courseCode: "CS101",
+      name: "Introduction to Computer Science",
+      department: "Computer Science",
+      description: "A foundational course in computer science.",
+      semester: "Fall",
+      year: 2024
+    },
+    {
+      courseCode: "MATH201",
+      name: "Calculus I",
+      department: "Mathematics",
+      description: "An introductory course to calculus.",
+      semester: "Fall",
+      year: 2024
+    },
+    {
+      courseCode: "ENG101",
+      name: "Freshman Composition",
+      department: "English",
+      description: "Introduction to academic writing.",
+      semester: "Fall",
+      year: 2024
+    }
+  ])
+}
+
+query ListCourses @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  courses {
+    id
+    courseCode
+    name
+    department
+  }
+}
+
+mutation CreateAssignment($courseId: UUID!, $title: String!, $description: String!, $dueDate: Date!, $maxGrade: Float!, $status: String!) @auth(level: USER) {
+  assignment_insert(data: {
+    courseId: $courseId,
+    title: $title,
+    description: $description,
+    dueDate: $dueDate,
+    maxGrade: $maxGrade,
+    status: $status,
+    createdAt_expr: "request.time"
+  })
+}
+
+query GetAssignmentsForCourse($courseId: UUID!) @auth(level: USER) {
+  assignments(where: {courseId: {eq: $courseId}}) {
+    id
+    title
+    description
+    dueDate
+    grade
+    maxGrade
+    status
+  }
+}

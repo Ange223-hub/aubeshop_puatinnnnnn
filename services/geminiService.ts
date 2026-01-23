@@ -1,12 +1,12 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+const getAI = () => new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY || '' });
 
 export const verifyStudentId = async (base64Image: string) => {
   const ai = getAI();
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-1.5-flash',
     contents: {
       parts: [
         { inlineData: { data: base64Image, mimeType: 'image/jpeg' } },
@@ -32,6 +32,7 @@ export const verifyStudentId = async (base64Image: string) => {
   try {
     return JSON.parse(response.text || '{}');
   } catch (e) {
+    console.error("Gemini Verification Error:", e);
     return { isValid: false };
   }
 };
@@ -39,7 +40,7 @@ export const verifyStudentId = async (base64Image: string) => {
 export const getZoneFromCoordinates = async (lat: number, lng: number) => {
   const ai = getAI();
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-1.5-flash',
     contents: `Tu es un expert du campus de l'Université Aube Nouvelle à Ouagadougou. Voici des coordonnées GPS : Lat ${lat}, Lng ${lng}. 
     Traduis ces coordonnées en un nom de zone compréhensible pour les étudiants (ex: Pavillon G, Faso Kanu, Administration, Entrée Principale, Cafétéria). 
     Réponds uniquement par le nom de la zone.`,
@@ -50,7 +51,7 @@ export const getZoneFromCoordinates = async (lat: number, lng: number) => {
 export const parseSchedule = async (base64Image: string) => {
   const ai = getAI();
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-1.5-flash',
     contents: {
       parts: [
         { inlineData: { data: base64Image, mimeType: 'image/jpeg' } },
@@ -71,13 +72,13 @@ export const parseSchedule = async (base64Image: string) => {
 };
 
 export const getSmartRoute = async (origin: string, destination: string) => {
-    const ai = getAI();
-    const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: `En tant qu'expert en trafic à Ouagadougou près de l'Université Aube Nouvelle, propose 3 raccourcis ou conseils de trajet pour aller de ${origin} à ${destination} en évitant les embouteillages classiques.`,
-        config: {
-            tools: [{ googleSearch: {} }]
-        }
-    });
-    return response.text;
+  const ai = getAI();
+  const response = await ai.models.generateContent({
+    model: 'gemini-1.5-flash',
+    contents: `En tant qu'expert en trafic à Ouagadougou près de l'Université Aube Nouvelle, propose 3 raccourcis ou conseils de trajet pour aller de ${origin} à ${destination} en évitant les embouteillages classiques.`,
+    config: {
+      tools: [{ googleSearch: {} }]
+    }
+  });
+  return response.text;
 };

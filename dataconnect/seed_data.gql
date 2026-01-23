@@ -1,0 +1,84 @@
+mutation CreateDemoData @transaction @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      createdAt: "2024-03-15T12:00:00Z",
+      displayName: "demouser1",
+      email: "demouser1@example.com"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      createdAt: "2024-03-15T13:00:00Z",
+      displayName: "demouser2",
+      email: "demouser2@example.com"
+    }
+  ])
+  instructor_insertMany(data: [
+    {
+      id: "650e8400-e29b-41d4-a716-446655440000",
+      firstName: "demoinstructor1",
+      lastName: "instructor",
+      email: "instructor1@example.com"
+    },
+    {
+      id: "650e8400-e29b-41d4-a716-446655440001",
+      firstName: "demoinstructor2",
+      lastName: "instructor",
+      email: "instructor2@example.com"
+    }
+  ])
+  course_insertMany(data: [
+    {
+      id: "750e8400-e29b-41d4-a716-446655440000",
+      courseCode: "DEMO101",
+      createdAt: "2024-03-15T14:00:00Z",
+      name: "Demo Course 1"
+    },
+    {
+      id: "750e8400-e29b-41d4-a716-446655440001",
+      courseCode: "DEMO102",
+      createdAt: "2024-03-15T15:00:00Z",
+      name: "Demo Course 2"
+    }
+  ])
+   courseInstructor_insertMany(data: [
+    {
+      courseId: "750e8400-e29b-41d4-a716-446655440000",
+      instructorId: "650e8400-e29b-41d4-a716-446655440000",
+    },
+    {
+      courseId: "750e8400-e29b-41d4-a716-446655440001",
+      instructorId: "650e8400-e29b-41d4-a716-446655440001",
+    }
+  ])
+   enrollment_insertMany(data: [
+    {
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      courseId: "750e8400-e29b-41d4-a716-446655440000",
+      enrolledAt: "2024-03-15T16:00:00Z",
+    },
+    {
+       userId: "550e8400-e29b-41d4-a716-446655440001",
+      courseId: "750e8400-e29b-41d4-a716-446655440001",
+      enrolledAt: "2024-03-15T17:00:00Z",
+    }
+  ])
+   assignment_insertMany(data: [
+    {
+      courseId: "750e8400-e29b-41d4-a716-446655440000",
+      createdAt: "2024-03-15T18:00:00Z",
+      dueDate: "2024-04-01",
+      title: "Demo Assignment 1",
+      status: "active",
+      maxGrade: 100.0
+    },
+    {
+      courseId: "750e8400-e29b-41d4-a716-446655440001",
+      createdAt: "2024-03-15T19:00:00Z",
+      dueDate: "2024-04-02",
+      title: "Demo Assignment 2",
+      status: "active",
+      maxGrade: 100.0
+    }
+  ])
+}

@@ -1,5 +1,6 @@
 
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
@@ -13,12 +14,13 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
  */
 
 const firebaseConfig = {
-  apiKey: "VOTRE_API_KEY",
-  authDomain: "VOTRE_PROJECT.firebaseapp.com",
-  projectId: "VOTRE_PROJECT_ID",
-  storageBucket: "VOTRE_PROJECT.appspot.com",
-  messagingSenderId: "VOTRE_SENDER_ID",
-  appId: "VOTRE_APP_ID"
+  apiKey: "AIzaSyAQjzhtVWE4oZkGb5coS4-fnwatwgqKfzA",
+  authDomain: "aubeshop-initialisation.firebaseapp.com",
+  projectId: "aubeshop-initialisation",
+  storageBucket: "aubeshop-initialisation.firebasestorage.app",
+  messagingSenderId: "651473957516",
+  appId: "1:651473957516:web:1ab1f2ebcba1c8468481a9",
+  measurementId: "G-MNMJCLXK5P"
 };
 
 // Initialisation sécurisée
@@ -29,6 +31,7 @@ let messaging: any;
 
 try {
   app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
   db = getFirestore(app);
   auth = getAuth(app);
   // Le messaging ne fonctionne que dans des contextes sécurisés (HTTPS)
